@@ -29,6 +29,10 @@ const removeCount = (a, b) => {
 // find the flames
 find.addEventListener("click", function () {
   // console.log(boyName.value, girlName.value);
+  const arrCount = [0];
+for (let i = 1; i < 26; i++) {
+  arrCount[i] = 0;
+}
 
   // for Boyname arrcount value incr by 1
   for (let i = 0; i < boyName.value.length; i++) {
