@@ -4,13 +4,6 @@ const find = document.querySelector(".calculator_form_btn");
 const boyName = document.querySelector("#boy_name");
 const girlName = document.querySelector("#girl_name");
 const result = document.querySelector("#result");
-let flamesList;
-
-// Array declaration
-const arrCount = [0];
-for (let i = 1; i < 26; i++) {
-  arrCount[i] = 0;
-}
 
 // Sum of the array
 const arrSum = (arr) => {
@@ -21,18 +14,23 @@ const arrSum = (arr) => {
   return res;
 };
 
-// remove count from list
-const removeCount = (a, b) => {
-  return b % a == 0 ? a - 1 : (b % a) - 1;
+// calculate flames by using josephus problem
+const calcFlames = function (n, k) {
+  if (n == 1) {
+    return 0;
+  } else {
+    return (calcFlames(n - 1, k) + k) % n;
+  }
 };
 
 // find the flames
 find.addEventListener("click", function () {
   // console.log(boyName.value, girlName.value);
+  // console.log(flamesList);
   const arrCount = [0];
-for (let i = 1; i < 26; i++) {
-  arrCount[i] = 0;
-}
+  for (let i = 1; i < 26; i++) {
+    arrCount[i] = 0;
+  }
 
   // for Boyname arrcount value incr by 1
   for (let i = 0; i < boyName.value.length; i++) {
@@ -52,25 +50,11 @@ for (let i = 1; i < 26; i++) {
   // console.log(arrCount, arrSum(arrCount));
 
   const flamesCount = arrSum(arrCount);
-  // init flames list declaration
-  flamesList = ["f", "l", "a", "m", "e", "s"];
 
-  while (flamesList.length !== 1) {
-    const rmvCount = removeCount(flamesList.length, flamesCount);
-    let newlist = [];
-    for (let i = rmvCount + 1; i < flamesList.length; i++) {
-      newlist.push(flamesList[i]);
-    }
-    for (let i = 0; i < rmvCount; i++) {
-      newlist.push(flamesList[i]);
-    }
-    flamesList = [];
-    for (let i = 0; i < newlist.length; i++) {
-      flamesList.push(newlist[i]);
-    }
-    // console.log(flamesList, newlist);
-  }
-  const value = flamesList[0];
+  // init flames list declaration
+  const flamesList = ["f", "l", "a", "m", "e", "s"];
+
+  const value = flamesList[calcFlames(6, flamesCount)];
   switch (value) {
     case "f":
       result.textContent = "Friends";
